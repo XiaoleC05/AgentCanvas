@@ -1,69 +1,70 @@
-# AgentCanvas — Visualize How AI Agents Think
+# AgentCanvas
 
-> Submit a task to an AI agent. Watch every step of its reasoning unfold in an interactive tree diagram.
-
-## Why AgentCanvas?
-
-AI agents are powerful but opaque. When an agent breaks down a task, calls tools, makes decisions, and recovers from errors — all of that happens in a black box. If you're learning about AI agents (or building one), you can't see what's actually going on.
-
-**AgentCanvas** opens the black box. It renders an agent's full execution trace as an interactive visualization, so you can understand exactly how agents think, decide, and act.
+Visualize AI agent task decomposition, reasoning chains, and tool calls in an interactive tree diagram.
 
 ## Features
 
-| Feature | What It Shows |
-|---------|---------------|
-| **Task Decomposition** | How the agent breaks a complex goal into smaller steps |
-| **Chain of Thought** | The agent's reasoning at each step — what it's thinking and why |
-| **Tool Calls** | Which tools were invoked, with what parameters, and what came back |
-| **Decision Branches** | Why the agent chose path A over path B, including backtracking |
-| **Error Recovery** | How the agent detected failures and corrected course |
-| **Teaching Mode** | Step-by-step playback that pauses between actions for explanation |
-| **Layered View** | Beginners see a simplified view; developers drill into technical details |
-| **Multi-View** | Switch between tree diagram, timeline, and flowchart layouts |
+- Render agent execution traces as an interactive tree diagram
+- Step-by-step playback with pause for detailed reasoning view
+- Display tool call names, parameters, and return values
+- Layered views for beginners (simplified) and developers (detailed)
+- Toggle between tree diagram, timeline, and flowchart layouts
+- Built-in demo agents for MVP, no external setup required
 
-## How It Looks
+## Architecture
 
-Imagine a tree structure where each node represents one step the agent took:
-
-```
-Task: "Research best Go web frameworks"
-├── 🔍 Search: "Go web frameworks 2026" → Found 15 results
-│   ├── 📖 Fetch: gin-gonic.com → Summary of features
-│   ├── 📖 Fetch: echo.labstack.com → Summary of features
-│   └── 📖 Fetch: fiber.wiki → Summary of features
-├── 🤔 Analyze: Comparing framework popularity...
-│   ├── 🏷️ Gin: most GitHub stars, largest community
-│   ├── 🏷️ Echo: lightweight, good performance
-│   └── 🏷️ Fiber: Express-like API, fast
-└── ✅ Conclusion: Recommend Gin for production, Echo for microservices
+```text
+Browser
+  ↓
+React Frontend (D3.js rendered graph)
+  ↓
+Go API Layer (agent task dispatch, result aggregation)
+  ↓
+PostgreSQL / SQLite (execution traces)
 ```
 
-## Tech Stack
+The online version runs on the Oxelia51 platform with unified frontend rendering. The Go backend manages agent task dispatch and result aggregation. The desktop version uses SQLite and embeds the React frontend within the Go binary.
 
-| Environment | Backend | Database | Frontend | Special |
-|-------------|---------|----------|----------|---------|
-| Online (Oxelia51) | Go | PostgreSQL | React + D3.js/Canvas | — |
-| Desktop (exe) | Go | SQLite | Embedded React + D3.js | — |
+## Requirements
 
-## Data Source
+Online version depends on the Oxelia51 platform (Go, PostgreSQL, React). Desktop version is a standalone executable with no runtime dependencies.
 
-- **MVP**: Built-in demo agents with preset tasks — no external setup needed
-- **Future**: Connect your own agents (LangChain, AutoGPT, CrewAI, or custom HTTP callbacks)
+## Installation
 
-## Getting Started
+### Desktop
 
-### Online (via Oxelia51)
+Download `AgentCanvas.exe` from [GitHub Releases](https://github.com/XiaoleC05/AgentCanvas/releases).
 
-1. Visit [oxelia51.com](https://oxelia51.com) and sign in
+### Online
+
+Integrated into the Oxelia51 platform. See [Oxelia51 deployment guide](https://github.com/XiaoleC05/Oxelia51).
+
+## Usage
+
+### Online
+
+1. Visit [oxelia51.com](https://oxelia51.com), register and sign in
 2. Open AgentCanvas from the tools menu
-3. Select a demo task and watch the agent's execution unfold
+3. Select a demo task to visualize the agent execution
 
-### Desktop (exe)
+### Desktop
 
-1. Download `AgentCanvas.exe` from [GitHub Releases](https://github.com/XiaoleC05/AgentCanvas/releases)
-2. Run the executable
-3. Same experience as online, fully local
+1. Double-click `AgentCanvas.exe` to start
+2. Select a built-in demo task. No internet required.
 
-## Status
+## Roadmap
 
-Concept phase. Development not yet started.
+- [ ] Built-in demo agents (MVP)
+- [ ] Custom agent framework integration (LangChain, AutoGPT, CrewAI)
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/xxx`)
+3. Commit your changes (`git commit -m 'Add xxx'`)
+4. Push the branch (`git push origin feature/xxx`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License.
