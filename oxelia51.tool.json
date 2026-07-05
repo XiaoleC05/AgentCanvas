@@ -1,0 +1,8 @@
+{
+  "slug": "agentcanvas",
+  "name": "AgentCanvas",
+  "description": "Agent 可视化画布",
+  "online_capable": true,
+  "github_repo": "XiaoleC05/AgentCanvas",
+  "release_url": "https://github.com/XiaoleC05/AgentCanvas/releases"
+}
