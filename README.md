@@ -1,15 +1,15 @@
 # AgentCanvas
 
-Visualize AI agent task decomposition, reasoning chains, and tool calls in an interactive tree diagram.
+Visualize task decomposition, reasoning chains, and execution steps in an interactive tree diagram.
 
 ## Features
 
-- Render agent execution traces as an interactive tree diagram
-- Step-by-step playback with pause for detailed reasoning view
+- Render execution traces as an interactive tree diagram
+- Step-by-step playback with detailed view for each node
 - Display tool call names, parameters, and return values
-- Layered views for beginners (simplified) and developers (detailed)
+- Layered views for beginners (simplified) and advanced (detailed)
 - Toggle between tree diagram, timeline, and flowchart layouts
-- Built-in demo agents for MVP, no external setup required
+- Built-in demo tasks for getting started
 
 ## Architecture
 
@@ -18,12 +18,12 @@ Browser
   ↓
 React Frontend (D3.js rendered graph)
   ↓
-Go API Layer (agent task dispatch, result aggregation)
+Go API Layer (task dispatch, result aggregation)
   ↓
 PostgreSQL / SQLite (execution traces)
 ```
 
-The online version runs on the Oxelia51 platform with unified frontend rendering. The Go backend manages agent task dispatch and result aggregation. The desktop version uses SQLite and embeds the React frontend within the Go binary.
+The online version runs on the Oxelia51 platform with unified frontend rendering. The Go backend manages task dispatch and result aggregation. The desktop version uses SQLite and embeds the React frontend within the Go binary.
 
 ## Requirements
 
@@ -45,7 +45,7 @@ Integrated into the Oxelia51 platform. See [Oxelia51 deployment guide](https://g
 
 1. Visit [oxelia51.com](https://oxelia51.com), register and sign in
 2. Open AgentCanvas from the tools menu
-3. Select a demo task to visualize the agent execution
+3. Select a demo task to visualize the execution
 
 ### Desktop
 
@@ -54,8 +54,8 @@ Integrated into the Oxelia51 platform. See [Oxelia51 deployment guide](https://g
 
 ## Roadmap
 
-- [ ] Built-in demo agents (MVP)
-- [ ] Custom agent framework integration (LangChain, AutoGPT, CrewAI)
+- [ ] Built-in demo tasks
+- [ ] Custom framework integration
 
 ## Contributing
 

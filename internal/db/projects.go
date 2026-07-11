@@ -123,8 +123,11 @@ func (r *ProjectRepository) Update(ctx context.Context, id, userID int64, req mo
 	return &p, err
 }
 
-func (r *ProjectRepository) Delete(ctx context.Context, id, userID int64) error {
+func (r *ProjectRepository) Delete(ctx context.Context, id, userID int64) (int64, error) {
 	query := `DELETE FROM agentcanvas.projects WHERE id = $1 AND user_id = $2`
-	_, err := Pool.Exec(ctx, query, id, userID)
-	return err
+	result, err := Pool.Exec(ctx, query, id, userID)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
 }

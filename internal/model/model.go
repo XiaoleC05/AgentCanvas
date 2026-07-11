@@ -46,10 +46,10 @@ type CreateNodeRequest struct {
 }
 
 type UpdateNodeRequest struct {
-	Label     string  `json:"label"`
-	Config    string  `json:"config"`
-	PositionX float64 `json:"position_x"`
-	PositionY float64 `json:"position_y"`
+	Label     string   `json:"label"`
+	Config    string   `json:"config"`
+	PositionX *float64 `json:"position_x"`
+	PositionY *float64 `json:"position_y"`
 }
 
 type Edge struct {

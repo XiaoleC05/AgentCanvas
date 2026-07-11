@@ -38,7 +38,7 @@ func (h *EdgeHandler) Create(c *gin.Context) {
 
 	project, err := h.projectRepo.GetByID(c.Request.Context(), projectID, userID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 	if project == nil {
@@ -54,7 +54,7 @@ func (h *EdgeHandler) Create(c *gin.Context) {
 
 	sourceExists, err := h.nodeRepo.ExistsInProject(c.Request.Context(), req.SourceNodeID, projectID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 	if !sourceExists {
@@ -64,7 +64,7 @@ func (h *EdgeHandler) Create(c *gin.Context) {
 
 	targetExists, err := h.nodeRepo.ExistsInProject(c.Request.Context(), req.TargetNodeID, projectID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 	if !targetExists {
@@ -74,7 +74,7 @@ func (h *EdgeHandler) Create(c *gin.Context) {
 
 	edge, err := h.repo.Create(c.Request.Context(), projectID, req)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 
@@ -96,7 +96,7 @@ func (h *EdgeHandler) Delete(c *gin.Context) {
 
 	projectID, err := h.repo.GetProjectID(c.Request.Context(), edgeID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 	if projectID == 0 {
@@ -106,7 +106,7 @@ func (h *EdgeHandler) Delete(c *gin.Context) {
 
 	project, err := h.projectRepo.GetByID(c.Request.Context(), projectID, userID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 	if project == nil {
@@ -115,7 +115,7 @@ func (h *EdgeHandler) Delete(c *gin.Context) {
 	}
 
 	if err := h.repo.Delete(c.Request.Context(), edgeID, projectID); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 

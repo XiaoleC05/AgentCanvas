@@ -36,7 +36,7 @@ func (h *NodeHandler) Create(c *gin.Context) {
 
 	project, err := h.projectRepo.GetByID(c.Request.Context(), projectID, userID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 	if project == nil {
@@ -52,7 +52,7 @@ func (h *NodeHandler) Create(c *gin.Context) {
 
 	node, err := h.repo.Create(c.Request.Context(), projectID, req)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 
@@ -74,7 +74,7 @@ func (h *NodeHandler) Update(c *gin.Context) {
 
 	projectID, err := h.repo.GetProjectID(c.Request.Context(), nodeID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 	if projectID == 0 {
@@ -84,7 +84,7 @@ func (h *NodeHandler) Update(c *gin.Context) {
 
 	project, err := h.projectRepo.GetByID(c.Request.Context(), projectID, userID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 	if project == nil {
@@ -100,7 +100,7 @@ func (h *NodeHandler) Update(c *gin.Context) {
 
 	node, err := h.repo.Update(c.Request.Context(), nodeID, projectID, req)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 	if node == nil {
@@ -126,7 +126,7 @@ func (h *NodeHandler) Delete(c *gin.Context) {
 
 	projectID, err := h.repo.GetProjectID(c.Request.Context(), nodeID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 	if projectID == 0 {
@@ -136,7 +136,7 @@ func (h *NodeHandler) Delete(c *gin.Context) {
 
 	project, err := h.projectRepo.GetByID(c.Request.Context(), projectID, userID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 	if project == nil {
@@ -145,7 +145,7 @@ func (h *NodeHandler) Delete(c *gin.Context) {
 	}
 
 	if err := h.repo.Delete(c.Request.Context(), nodeID, projectID); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 

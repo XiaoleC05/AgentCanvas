@@ -65,15 +65,23 @@ func (r *NodeRepository) Update(ctx context.Context, id int64, projectID int64, 
 		UPDATE agentcanvas.nodes
 		SET label = COALESCE(NULLIF($3, ''), label),
 		    config = COALESCE(NULLIF($4, ''), config),
-		    position_x = $5,
-		    position_y = $6
+		    position_x = COALESCE($5, position_x),
+		    position_y = COALESCE($6, position_y)
 		WHERE id = $1 AND project_id = $2
 		RETURNING id, project_id, type, label, config, position_x, position_y, created_at
 	`
 
+	var posX, posY interface{}
+	if req.PositionX != nil {
+		posX = *req.PositionX
+	}
+	if req.PositionY != nil {
+		posY = *req.PositionY
+	}
+
 	var n model.Node
 	err := Pool.QueryRow(ctx, query,
-		id, projectID, req.Label, req.Config, req.PositionX, req.PositionY,
+		id, projectID, req.Label, req.Config, posX, posY,
 	).Scan(&n.ID, &n.ProjectID, &n.Type, &n.Label, &n.Config, &n.PositionX, &n.PositionY, &n.CreatedAt)
 
 	if err == pgx.ErrNoRows {
